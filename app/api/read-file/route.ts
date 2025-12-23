@@ -11,14 +11,24 @@ export async function POST(request: Request) {
       const sanitizedFilePath = sanitizeFilename(filePath);
       const normalizedPath = path.normalize(sanitizedFilePath);
       const allowedBaseDirs = [
-        process.env.APP_DATA_DIRECTORY || '/app/user_data',
-        process.env.TEMP_DIRECTORY || '/tmp',
-        '/app/user_data' 
-      ];
+        process.env.APP_DATA_DIRECTORY || './user_data',
+        process.env.TEMP_DIRECTORY || '/tmp'
+      ].filter(dir => {
+        try {
+          return fs.existsSync(dir);
+        } catch {
+          return false;
+        }
+      });
+
       const resolvedPath = fs.realpathSync(path.resolve(normalizedPath));
       const isPathAllowed = allowedBaseDirs.some(baseDir => {
-      const resolvedBaseDir = fs.realpathSync(path.resolve(baseDir));
-      return resolvedPath.startsWith(resolvedBaseDir + path.sep) || resolvedPath === resolvedBaseDir;
+      try {
+        const resolvedBaseDir = fs.realpathSync(path.resolve(baseDir));
+        return resolvedPath.startsWith(resolvedBaseDir + path.sep) || resolvedPath === resolvedBaseDir;
+      } catch {
+        return false;
+      }
     });
     if (!isPathAllowed) {
       console.error('Unauthorized file access attempt:', resolvedPath);
