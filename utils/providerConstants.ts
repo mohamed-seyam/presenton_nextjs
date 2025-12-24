@@ -14,6 +14,9 @@ export interface ImageProviderOption {
   requiresApiKey?: boolean;
   apiKeyField?: string;
   apiKeyFieldLabel?: string;
+  requiresUrl?: boolean;
+  urlField?: string;
+  urlFieldLabel?: string;
 }
 
 export interface LLMProviderOption {
@@ -61,6 +64,19 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderOption> = {
     apiKeyField: "GOOGLE_API_KEY",
     apiKeyFieldLabel: "Google API Key"
   },
+  flux: {
+    value: "flux",
+    label: "Flux",
+    description: "Fast AI image generation model",
+    icon: "/icons/flux.png",
+    requiresUrl: true,
+    urlField: "FLUX_URL",
+    urlFieldLabel: "Flux API URL",
+    requiresApiKey: true,
+    apiKeyField: "FLUX_API_KEY",
+    apiKeyFieldLabel: "Flux Authorization Token"
+  },
+
 };
 
 export const LLM_PROVIDERS: Record<string, LLMProviderOption> = {

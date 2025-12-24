@@ -321,7 +321,7 @@ export default function LLMProviderSelection({
               </div>
             </div>
 
-            {/* Dynamic API Key Input for Image Provider */}
+            {/* Dynamic URL and API Key Input for Image Provider */}
             {llmConfig.IMAGE_PROVIDER &&
               IMAGE_PROVIDERS[llmConfig.IMAGE_PROVIDER] &&
               (() => {
@@ -336,38 +336,77 @@ export default function LLMProviderSelection({
                   return <></>;
                 }
 
-                // Show API key input for other providers
+                // Show URL and API key inputs for providers that need them
                 return (
-                  <div className="mb-8">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {provider.apiKeyFieldLabel}
-                    </label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder={`Enter your ${provider.apiKeyFieldLabel}`}
-                        className="w-full px-4 py-2.5 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors"
-                        value={
-                          provider.apiKeyField === "PEXELS_API_KEY"
-                            ? llmConfig.PEXELS_API_KEY || ""
-                            : provider.apiKeyField === "PIXABAY_API_KEY"
-                              ? llmConfig.PIXABAY_API_KEY || ""
-                              : ""
-                        }
-                        onChange={(e) => {
-                          if (provider.apiKeyField === "PEXELS_API_KEY") {
-                            input_field_changed(e.target.value, "pexels_api_key");
-                          } else if (provider.apiKeyField === "PIXABAY_API_KEY") {
-                            input_field_changed(e.target.value, "pixabay_api_key");
-                          }
-                        }}
-                      />
-                    </div>
-                    <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-                      <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
-                      API key for {provider.label} image generation
-                    </p>
-                  </div>
+                  <>
+                    {/* URL Input for providers that need it */}
+                    {provider.requiresUrl && provider.urlField && (
+                      <div className="mb-8">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {provider.urlFieldLabel}
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            placeholder={`Enter your ${provider.urlFieldLabel}`}
+                            className="w-full px-4 py-2.5 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors"
+                            value={
+                              provider.urlField === "FLUX_URL"
+                                ? llmConfig.FLUX_URL || ""
+                                : ""
+                            }
+                            onChange={(e) => {
+                              if (provider.urlField === "FLUX_URL") {
+                                input_field_changed(e.target.value, "flux_url");
+                              }
+                            }}
+                          />
+                        </div>
+                        <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
+                          <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+                          API endpoint URL for {provider.label}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* API Key Input */}
+                    {provider.requiresApiKey && provider.apiKeyField && (
+                      <div className="mb-8">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {provider.apiKeyFieldLabel}
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            placeholder={`Enter your ${provider.apiKeyFieldLabel}`}
+                            className="w-full px-4 py-2.5 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors"
+                            value={
+                              provider.apiKeyField === "PEXELS_API_KEY"
+                                ? llmConfig.PEXELS_API_KEY || ""
+                                : provider.apiKeyField === "PIXABAY_API_KEY"
+                                  ? llmConfig.PIXABAY_API_KEY || ""
+                                  : provider.apiKeyField === "FLUX_API_KEY"
+                                    ? llmConfig.FLUX_API_KEY || ""
+                                    : ""
+                            }
+                            onChange={(e) => {
+                              if (provider.apiKeyField === "PEXELS_API_KEY") {
+                                input_field_changed(e.target.value, "pexels_api_key");
+                              } else if (provider.apiKeyField === "PIXABAY_API_KEY") {
+                                input_field_changed(e.target.value, "pixabay_api_key");
+                              } else if (provider.apiKeyField === "FLUX_API_KEY") {
+                                input_field_changed(e.target.value, "flux_api_key");
+                              }
+                            }}
+                          />
+                        </div>
+                        <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
+                          <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+                          API key for {provider.label} image generation
+                        </p>
+                      </div>
+                    )}
+                  </>
                 );
               })()}
           </>

@@ -27,6 +27,8 @@ export interface LLMConfig {
   IMAGE_PROVIDER?: string;
   PEXELS_API_KEY?: string;
   PIXABAY_API_KEY?: string;
+  FLUX_URL?: string;
+  FLUX_API_KEY?: string;
 
   // Other Configs
   TOOL_CALLS?: boolean;

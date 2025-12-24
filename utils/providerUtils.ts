@@ -41,6 +41,8 @@ export const updateLLMConfig = (
     custom_model: "CUSTOM_MODEL",
     pexels_api_key: "PEXELS_API_KEY",
     pixabay_api_key: "PIXABAY_API_KEY",
+    flux_url: "FLUX_URL",
+    flux_api_key: "FLUX_API_KEY",
     image_provider: "IMAGE_PROVIDER",
     disable_image_generation: "DISABLE_IMAGE_GENERATION",
     use_custom_url: "USE_CUSTOM_URL",

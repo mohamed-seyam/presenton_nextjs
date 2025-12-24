@@ -64,6 +64,8 @@ export async function POST(request: Request) {
       userConfig.PIXABAY_API_KEY || existingConfig.PIXABAY_API_KEY,
     IMAGE_PROVIDER: userConfig.IMAGE_PROVIDER || existingConfig.IMAGE_PROVIDER,
     PEXELS_API_KEY: userConfig.PEXELS_API_KEY || existingConfig.PEXELS_API_KEY,
+    FLUX_URL: userConfig.FLUX_URL || existingConfig.FLUX_URL,
+    FLUX_API_KEY: userConfig.FLUX_API_KEY || existingConfig.FLUX_API_KEY,
     TOOL_CALLS:
       userConfig.TOOL_CALLS === undefined
         ? existingConfig.TOOL_CALLS
