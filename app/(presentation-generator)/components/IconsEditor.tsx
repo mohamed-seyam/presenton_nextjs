@@ -11,7 +11,6 @@ import { Search } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { PresentationGenerationApi } from "../services/api/presentation-generation";
-import { getStaticFileUrl } from "../utils/others";
 import { toast } from "sonner";
 interface IconsEditorProps {
   icon_prompt?: string[] | null;
