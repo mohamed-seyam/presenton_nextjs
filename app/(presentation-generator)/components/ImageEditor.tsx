@@ -9,7 +9,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Wand2, Upload, Loader2, Delete, Trash } from "lucide-react";
+import { Wand2, Upload, Loader2, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PresentationGenerationApi } from "../services/api/presentation-generation";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -74,7 +74,24 @@ const ImageEditor = ({
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    setPreviewImages(initialImage);
+    // Normalize the path when initialImage changes
+    let normalized: string | null = null;
+    if (initialImage) {
+      // If it's a full URL, extract just the path
+      if (initialImage.startsWith('http://') || initialImage.startsWith('https://')) {
+        try {
+          const url = new URL(initialImage);
+          normalized = url.pathname; // Get just the /app_data/images/... part
+        } catch (e) {
+          console.error('Invalid URL:', initialImage);
+          normalized = initialImage; // Fallback to original
+        }
+      } else {
+        // If it's already a relative path, ensure it starts with /
+        normalized = initialImage.startsWith('/') ? initialImage : `/${initialImage}`;
+      }
+    }
+    setPreviewImages(normalized);
   }, [initialImage]);
 
   useEffect(() => {
@@ -98,7 +115,12 @@ const ImageEditor = ({
       trackEvent(MixpanelEvent.ImageEditor_GetPreviousGeneratedImages_API_Call);
       const response =
         await PresentationGenerationApi.getPreviousGeneratedImages();
-      setPreviousGeneratedImages(response);
+      // Ensure all image paths start with / for proper URL resolution
+      const normalizedImages = response.map(img => ({
+        ...img,
+        path: img.path.startsWith('/') ? img.path : `/${img.path}`
+      }));
+      setPreviousGeneratedImages(normalizedImages);
     } catch (error: any) {
       toast.error("Failed to get previous generated images. Please try again.");
       console.error("error in getting previous generated images", error);
@@ -232,7 +254,20 @@ const ImageEditor = ({
       setUploadError(null);
       trackEvent(MixpanelEvent.ImageEditor_UploadImage_API_Call);
       const result = await ImagesApi.uploadImage(file);
-      setUploadedImageUrl(result.path);
+      // Normalize path - handle both full URLs and relative paths
+      let imagePath = result.path;
+      if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+        try {
+          const url = new URL(imagePath);
+          imagePath = url.pathname;
+        } catch (e) {
+          console.error('Invalid URL:', imagePath);
+        }
+      }
+      if (!imagePath.startsWith('/')) {
+        imagePath = `/${imagePath}`;
+      }
+      setUploadedImageUrl(imagePath);
     } catch (err:any) {
       setUploadError("Failed to upload image. Please try again.");
       toast.error(err.message || "Failed to upload image. Please try again.");
@@ -246,7 +281,27 @@ const ImageEditor = ({
     try {
       setUploadedImagesLoading(true);
       const result = await ImagesApi.getUploadedImages();
-      setUploadedImages(result);
+      console.log('Fetched uploaded images:', result);
+      // Normalize image paths - handle both full URLs and relative paths
+      const normalizedImages = result.map(img => {
+        let path = img.path;
+        // If it's a full URL, extract just the path part
+        if (path.startsWith('http://') || path.startsWith('https://')) {
+          try {
+            const url = new URL(path);
+            path = url.pathname; // Get just the /app_data/images/... part
+          } catch (e) {
+            console.error('Invalid URL:', path);
+          }
+        }
+        // Ensure path starts with /
+        if (!path.startsWith('/')) {
+          path = `/${path}`;
+        }
+        return { ...img, path };
+      });
+      console.log('Normalized uploaded images:', normalizedImages);
+      setUploadedImages(normalizedImages);
     } catch (err:any) {
       toast.error(err.message || "Failed to get uploaded images. Please try again.");
       console.log("Get uploaded images error:", err.message);
@@ -464,19 +519,19 @@ const ImageEditor = ({
                   )}
                   <div>
                     <h3 className="text-sm font-medium mb-2">Uploaded Images:</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      {uploadedImagesLoading ? (
-                        <div className="flex items-center justify-center">
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        </div>
-                      ) : (
-                        uploadedImages.map((image) => (
+                    {uploadedImagesLoading ? (
+                      <div className="flex items-center justify-center py-8">
+                        <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+                      </div>
+                    ) : uploadedImages.length > 0 ? (
+                      <div className="grid grid-cols-2 gap-4">
+                        {uploadedImages.map((image) => (
                           <div key={image.id}>
                             <div
                               onClick={() =>
                                 handleImageChange(image.path)
                               }
-                              className="cursor-pointer group aspect-[4/3] rounded-lg overflow-hidden relative border border-gray-200"
+                              className="cursor-pointer group aspect-[4/3] rounded-lg overflow-hidden relative border border-gray-200 bg-gray-50"
                             >
                               <Trash className="absolute group-hover:opacity-100 opacity-0 transition-opacity z-10 w-4 h-4 top-2 right-2 text-red-500" onClick={(e) =>{
                                 e.stopPropagation();
@@ -486,6 +541,10 @@ const ImageEditor = ({
                                 src={image.path}
                                 alt="Uploaded preview"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                onError={(e) => {
+                                  console.error('Failed to load uploaded image. Path:', image.path);
+                                  e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-red-50 text-red-600 text-xs p-2"><div class="text-center"><div class="font-semibold mb-1">Failed to load</div><div class="text-[10px] break-all">${image.path}</div></div></div>`;
+                                }}
                               />
                               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-200" />
                               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -494,46 +553,58 @@ const ImageEditor = ({
                                 </span>
                               </div>
                             </div>
-                          
                           </div>
-                        ))
-                      )}
-                    </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 text-gray-500 text-sm">
+                        No uploaded images yet
+                      </div>
+                    )}
                   </div>
                 </div>
               </TabsContent>
               <TabsContent value="edit" className="mt-4 space-y-4">
                 <div className="space-y-4">
-                  <h3 className="text-sm font-medium mb-2">Current Image</h3>
+                  <h3 className="text-sm font-medium mb-2">Preview</h3>
                   <div
                     onClick={(e) => {
                       if (isFocusPointMode) {
                         handleFocusPointClick(e);
-                      } else {
                       }
                     }}
-                    className="aspect-[4/3] group  rounded-lg overflow-hidden relative border border-gray-200"
+                    className="aspect-[4/3] group rounded-lg overflow-hidden relative border border-gray-200 bg-gray-50"
                   >
-                    <p className="group-hover:opacity-100 opacity-0 transition-opacity absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-center font-medium bg-black/50 text-white px-2 py-1 rounded">
-                      Click to Change Focus Point
-                    </p>
-                    {previewImages && (
-                      <img
-                        ref={imageRef}
-                        onClick={() => {
-                          setIsFocusPointMode(true);
-                        }}
-                        src={previewImages}
-                        style={{
-                          objectFit: objectFit,
-                          objectPosition: `${focusPoint.x}% ${focusPoint.y}%`,
-                        }}
-                        alt={`Preview`}
-                        className="w-full h-full "
-                      />
+                    {previewImages ? (
+                      <>
+                        <img
+                          ref={imageRef}
+                          onClick={() => {
+                            setIsFocusPointMode(true);
+                          }}
+                          src={previewImages}
+                          style={{
+                            objectFit: objectFit,
+                            objectPosition: `${focusPoint.x}% ${focusPoint.y}%`,
+                          }}
+                          alt="Preview"
+                          className="w-full h-full cursor-pointer"
+                        />
+                        {!isFocusPointMode && (
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-200 pointer-events-none">
+                            <p className="group-hover:opacity-100 opacity-0 transition-opacity absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-center font-medium bg-black/70 text-white px-3 py-2 rounded pointer-events-none">
+                              Click to Change Focus Point
+                            </p>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
+                        No image selected
+                      </div>
                     )}
                     {isFocusPointMode && (
-                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-10">
                         <div className="text-white text-center p-2 bg-black/50 rounded">
                           <p className="text-sm font-medium pointer-events-none">
                             Click anywhere to set focus point
