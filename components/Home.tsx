@@ -147,7 +147,7 @@ export default function Home() {
         {/* Branding Header */}
         <div className="text-center mb-2 mt-4 flex-shrink-0">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <img src="/Logo.png" alt="Presenton Logo" className="h-12" />
+            <img src="/wakeb-logo.jpg" alt="Slidegen Logo" className="h-12 rounded-lg" />
           </div>
           <p className="text-gray-600 text-sm">
             Open-source AI presentation generator
@@ -246,7 +246,7 @@ export default function Home() {
             disabled={buttonState.isDisabled}
             className={`w-full font-semibold py-3 px-4 rounded-lg transition-all duration-500 ${buttonState.isDisabled
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:ring-4 focus:ring-blue-200"
+              : "bg-primary hover:opacity-90 focus:ring-4 focus:ring-primary/30"
               } text-white`}
           >
             {buttonState.isLoading ? (

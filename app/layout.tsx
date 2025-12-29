@@ -31,12 +31,13 @@ const roboto = Roboto({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://presenton.ai"),
-  title: "Presenton - Open Source AI presentation generator",
+  metadataBase: new URL("https://slidegen.app"),
+  title: "Slidegen - AI-Powered Presentation Generator",
   description:
-    "Open-source AI presentation generator with custom layouts, multi-model support (OpenAI, Gemini, Ollama), and PDF/PPTX export. A free Gamma alternative.",
+    "Create stunning presentations with Slidegen's AI-powered platform. Multi-model support (OpenAI, Gemini, Ollama), custom layouts, and PDF/PPTX export.",
   keywords: [
     "AI presentation generator",
+    "Slidegen",
     "data storytelling",
     "data visualization tool",
     "AI data presentation",
@@ -44,33 +45,34 @@ export const metadata: Metadata = {
     "data to presentation",
     "interactive presentations",
     "professional slides",
+    "slide generator",
   ],
   openGraph: {
-    title: "Presenton - Open Source AI presentation generator",
+    title: "Slidegen - AI-Powered Presentation Generator",
     description:
-      "Open-source AI presentation generator with custom layouts, multi-model support (OpenAI, Gemini, Ollama), and PDF/PPTX export. A free Gamma alternative.",
-    url: "https://presenton.ai",
-    siteName: "Presenton",
+      "Create stunning presentations with Slidegen's AI-powered platform. Multi-model support, custom layouts, and professional export options.",
+    url: "https://slidegen.app",
+    siteName: "Slidegen",
     images: [
       {
-        url: "https://presenton.ai/presenton-feature-graphics.png",
+        url: "https://slidegen.app/slidegen-feature-graphics.png",
         width: 1200,
         height: 630,
-        alt: "Presenton Logo",
+        alt: "Slidegen Logo",
       },
     ],
     type: "website",
     locale: "en_US",
   },
   alternates: {
-    canonical: "https://presenton.ai",
+    canonical: "https://slidegen.app",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Presenton - Open Source AI presentation generator",
+    title: "Slidegen - AI-Powered Presentation Generator",
     description:
-      "Open-source AI presentation generator with custom layouts, multi-model support (OpenAI, Gemini, Ollama), and PDF/PPTX export. A free Gamma alternative.",
-    images: ["https://presenton.ai/presenton-feature-graphics.png"],
+      "Create stunning presentations with Slidegen's AI-powered platform. Multi-model support, custom layouts, and professional export options.",
+    images: ["https://slidegen.app/slidegen-feature-graphics.png"],
   },
 };
 

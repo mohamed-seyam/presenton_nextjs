@@ -5,11 +5,11 @@ import Header from "@/app/(presentation-generator)/dashboard/components/Header";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Presenton | Open Source AI presentation generator",
+  title: "Create | Slidegen - AI Presentation Generator",
   description:
-    "Open-source AI presentation generator with custom layouts, multi-model support (OpenAI, Gemini, Ollama), and PDF/PPTX export. A free Gamma alternative.",
+    "Create stunning presentations with Slidegen's AI-powered platform. Multi-model support (OpenAI, Gemini, Ollama), custom layouts, and PDF/PPTX export.",
   alternates: {
-    canonical: "https://presenton.ai/create",
+    canonical: "https://slidegen.app/create",
   },
   keywords: [
     "presentation generator",
@@ -24,20 +24,18 @@ export const metadata: Metadata = {
     "business presentations",
   ],
   openGraph: {
-    title: "Create Data Presentation | PresentOn",
+    title: "Create | Slidegen - AI Presentation Generator",
     description:
-      "Open-source AI presentation generator with custom layouts, multi-model support (OpenAI, Gemini, Ollama), and PDF/PPTX export. A free Gamma alternative.",
+      "Create stunning presentations with Slidegen's AI-powered platform. Multi-model support, custom layouts, and professional export options.",
     type: "website",
-    url: "https://presenton.ai/create",
-    siteName: "PresentOn",
+    url: "https://slidegen.app/create",
+    siteName: "Slidegen",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Create Data Presentation | PresentOn",
+    title: "Create | Slidegen - AI Presentation Generator",
     description:
-      "Open-source AI presentation generator with custom layouts, multi-model support (OpenAI, Gemini, Ollama), and PDF/PPTX export. A free Gamma alternative.",
-    site: "@presenton_ai",
-    creator: "@presenton_ai",
+      "Create stunning presentations with Slidegen's AI-powered platform. Multi-model support, custom layouts, and professional export options.",
   },
 };
 

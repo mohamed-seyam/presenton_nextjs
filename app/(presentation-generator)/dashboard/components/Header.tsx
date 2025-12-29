@@ -11,16 +11,16 @@ import { trackEvent, MixpanelEvent } from "@/utils/mixpanel";
 const Header = () => {
   const pathname = usePathname();
   return (
-    <div className="bg-[#5146E5] w-full shadow-lg sticky top-0 z-50">
+    <div className="bg-primary w-full shadow-lg sticky top-0 z-50">
       <Wrapper>
         <div className="flex items-center justify-between py-1">
           <div className="flex items-center gap-3">
             {(pathname !== "/upload" && pathname !== "/dashboard") && <BackBtn />}
             <Link href="/dashboard" onClick={() => trackEvent(MixpanelEvent.Navigation, { from: pathname, to: "/dashboard" })}>
               <img
-                src="/logo-white.png"
-                alt="Presentation logo"
-                className="h-16"
+                src="/wakeb-logo.jpg"
+                alt="Slidegen logo"
+                className="h-16 rounded-lg"
               />
             </Link>
           </div>
