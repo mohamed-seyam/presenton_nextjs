@@ -131,12 +131,12 @@ export function OutlineItem({
                     className="min-w-8 sm:min-w-10 w-10 sm:w-14 h-10 sm:h-14 bg-blue-400/10 rounded-[8px] flex items-center justify-center relative cursor-grab"
                 >
                     <div className="grid grid-cols-2 gap-[2px]">
-                        <div className="w-[3px] h-[3px] bg-black/80 rounded-full" />
-                        <div className="w-[3px] h-[3px] bg-black/80 rounded-full" />
-                        <div className="w-[3px] h-[3px] bg-black/80 rounded-full" />
-                        <div className="w-[3px] h-[3px] bg-black/80 rounded-full" />
+                        <div className="w-[3px] h-[3px] bg-gray-300 rounded-full" />
+                        <div className="w-[3px] h-[3px] bg-gray-300 rounded-full" />
+                        <div className="w-[3px] h-[3px] bg-gray-300 rounded-full" />
+                        <div className="w-[3px] h-[3px] bg-gray-300 rounded-full" />
                     </div>
-                    <span className="text-black/80 text-md sm:text-lg font-medium ml-1">{index}</span>
+                    <span className="text-gray-200 text-md sm:text-lg font-medium ml-1">{index}</span>
                 </div>
 
                 {/* Main Title Input - Add onFocus handler */}
@@ -145,16 +145,16 @@ export function OutlineItem({
                     {isStreaming ? (
                         isActiveStreaming ? (
                             <div
-                                className="text-sm flex-1 font-normal prose prose-sm max-w-none"
+                                className="text-sm flex-1 font-normal prose prose-sm prose-invert max-w-none text-gray-200"
                                 dangerouslySetInnerHTML={{ __html: renderedHtml || "" }}
                             />
                         ) : stableHtml ? (
                             <div
-                                className="text-sm flex-1 font-normal prose prose-sm max-w-none"
+                                className="text-sm flex-1 font-normal prose prose-sm prose-invert max-w-none text-gray-200"
                                 dangerouslySetInnerHTML={{ __html: stableHtml }}
                             />
                         ) : (
-                            <p className="text-sm  flex-1 font-normal">{slideOutline.content || ''}</p>
+                            <p className="text-sm flex-1 font-normal text-gray-200">{slideOutline.content || ''}</p>
                         )
                     ) : (
                         <MarkdownEditor
@@ -172,9 +172,9 @@ export function OutlineItem({
                     <ToolTip content="Delete Slide">
                         <button
                             onClick={handleSlideDelete}
-                            className="p-1.5 sm:p-2 bg-gray-200/50 hover:bg-gray-200 rounded-lg transition-colors"
+                            className="p-1.5 sm:p-2 bg-gray-700/50 hover:bg-gray-600 rounded-lg transition-colors"
                         >
-                            <Trash2 className="w-4 h-4 sm:w-5 sm:h-5 text-black/70" />
+                            <Trash2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
                         </button>
                     </ToolTip>
                 </div>

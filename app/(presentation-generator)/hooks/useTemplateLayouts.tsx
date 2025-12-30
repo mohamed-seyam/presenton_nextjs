@@ -27,7 +27,7 @@ export const useTemplateLayouts = () => {
 
   // Render slide content with group validation, automatic Tiptap text editing, and editable images/icons
   const renderSlideContent = useMemo(() => {
-    return (slide: any, isEditMode: boolean) => {
+    return (slide: any, isEditMode: boolean, isDarkMode?: boolean) => {
 
       const Layout = getTemplateLayout(slide.layout, slide.layout_group);
       if (loading) {
@@ -54,6 +54,7 @@ export const useTemplateLayouts = () => {
             slideIndex={slide.index}
             slideData={slide.content}
             properties={slide.properties}
+            isDarkMode={isDarkMode}
           >
             <TiptapTextReplacer
               key={slide.id}

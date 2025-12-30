@@ -26,9 +26,10 @@ interface SlideContentProps {
   slide: any;
   index: number;
   presentationId: string;
+  isDarkMode?: boolean;
 }
 
-const SlideContent = ({ slide, index, presentationId }: SlideContentProps) => {
+const SlideContent = ({ slide, index, presentationId, isDarkMode = false }: SlideContentProps) => {
   const dispatch = useDispatch();
   const [isUpdating, setIsUpdating] = useState(false);
   const [showNewSlideSelection, setShowNewSlideSelection] = useState(false);
@@ -112,8 +113,8 @@ const SlideContent = ({ slide, index, presentationId }: SlideContentProps) => {
 
   // Memoized slide content rendering to prevent unnecessary re-renders
   const slideContent = useMemo(() => {
-    return renderSlideContent(slide, isStreaming ? false : true); // Enable edit mode for main content
-  }, [renderSlideContent, slide, isStreaming]);
+    return renderSlideContent(slide, isStreaming ? false : true, isDarkMode); // Enable edit mode for main content
+  }, [renderSlideContent, slide, isStreaming, isDarkMode]);
 
   useEffect(() => {
     if (loading) {

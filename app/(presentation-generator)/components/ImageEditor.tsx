@@ -28,6 +28,7 @@ interface ImageEditorProps {
   onClose?: () => void;
   onImageChange?: (newImageUrl: string, prompt?: string) => void;
   onFocusPointClick?: (propertiesData: any) => void;
+  isDarkMode?: boolean;
 }
 
 const ImageEditor = ({
@@ -38,6 +39,7 @@ const ImageEditor = ({
   onClose,
   onFocusPointClick,
   onImageChange,
+  isDarkMode = false,
 }: ImageEditorProps) => {
   // State management
   const [previewImages, setPreviewImages] = useState(initialImage);
@@ -330,23 +332,53 @@ const ImageEditor = ({
         <SheetContent
           side="right"
           className="w-[600px]"
+          style={{
+            background: isDarkMode ? "#2a2a2a" : "#ffffff",
+          }}
           onOpenAutoFocus={(e) => e.preventDefault()}
           onClick={(e) => e.stopPropagation()}
         >
           <SheetHeader>
-            <SheetTitle>Update Image</SheetTitle>
+            <SheetTitle className={isDarkMode ? "text-gray-200" : "text-gray-800"}>Update Image</SheetTitle>
           </SheetHeader>
 
           <div className="mt-6">
             <Tabs defaultValue="generate" className="w-full" onValueChange={handleTabChange}>
-              <TabsList className="grid bg-blue-100 border border-blue-300 w-full grid-cols-3 mx-auto">
-                <TabsTrigger className="font-medium" value="generate">
+              <TabsList
+                className={`grid border w-full grid-cols-3 mx-auto ${
+                  isDarkMode
+                    ? "bg-gray-700 border-gray-600"
+                    : "bg-blue-100 border-blue-300"
+                }`}
+              >
+                <TabsTrigger
+                  className={`font-medium ${
+                    isDarkMode
+                      ? "text-gray-200 data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                      : "data-[state=active]:bg-white data-[state=active]:text-primary"
+                  }`}
+                  value="generate"
+                >
                   AI Generate
                 </TabsTrigger>
-                <TabsTrigger className="font-medium" value="upload">
+                <TabsTrigger
+                  className={`font-medium ${
+                    isDarkMode
+                      ? "text-gray-200 data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                      : "data-[state=active]:bg-white data-[state=active]:text-primary"
+                  }`}
+                  value="upload"
+                >
                   Upload
                 </TabsTrigger>
-                <TabsTrigger className="font-medium" value="edit">
+                <TabsTrigger
+                  className={`font-medium ${
+                    isDarkMode
+                      ? "text-gray-200 data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                      : "data-[state=active]:bg-white data-[state=active]:text-primary"
+                  }`}
+                  value="edit"
+                >
                   Edit
                 </TabsTrigger>
               </TabsList>
@@ -354,19 +386,23 @@ const ImageEditor = ({
               <TabsContent value="generate" className="mt-4 space-y-4 overflow-y-auto hide-scrollbar h-[85vh]">
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-sm font-medium mb-1">Current Prompt</h3>
-                    <p className="text-sm text-gray-500">{promptContent}</p>
+                    <h3 className={`text-sm font-medium mb-1 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>Current Prompt</h3>
+                    <p className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>{promptContent}</p>
                   </div>
 
                   <div>
-                    <h3 className="text-base font-medium mb-2">
+                    <h3 className={`text-base font-medium mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>
                       Image Description
                     </h3>
                     <Textarea
                       placeholder="Describe the image you want to generate..."
                       value={prompt}
                       onChange={(e) => setPrompt(e.target.value)}
-                      className="min-h-[100px]"
+                      className={`min-h-[100px] ${
+                        isDarkMode
+                          ? "bg-gray-700 text-gray-200 border-gray-600 placeholder:text-gray-400"
+                          : ""
+                      }`}
                     />
                   </div>
 
@@ -392,7 +428,11 @@ const ImageEditor = ({
                     ) : (
                       <div
                         onClick={() => handleImageChange(previewImages)}
-                        className="aspect-[4/3] w-full overflow-hidden rounded-lg border cursor-pointer hover:border-blue-500 transition-colors"
+                        className={`aspect-[4/3] w-full overflow-hidden rounded-lg border cursor-pointer transition-colors ${
+                          isDarkMode
+                            ? "border-gray-600 hover:border-blue-500"
+                            : "border-gray-200 hover:border-blue-500"
+                        }`}
                       >
                         {previewImages && (
                           <img
@@ -406,7 +446,7 @@ const ImageEditor = ({
                   </div>
                   {previousGeneratedImages.length > 0 && (
                     <div className="mt-4">
-                      <h3 className="text-sm font-medium mb-2">
+                      <h3 className={`text-sm font-medium mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>
                         Previous Generated Images
                       </h3>
                       <div className="grid grid-cols-2 gap-4  ">
@@ -414,7 +454,11 @@ const ImageEditor = ({
                           <div
                             onClick={() => handleImageChange(image.path)}
                             key={image.id}
-                            className="aspect-[4/3] w-full overflow-hidden rounded-lg border cursor-pointer hover:border-blue-500 transition-colors"
+                            className={`aspect-[4/3] w-full overflow-hidden rounded-lg border cursor-pointer transition-colors ${
+                              isDarkMode
+                                ? "border-gray-600 hover:border-blue-500"
+                                : "border-gray-200 hover:border-blue-500"
+                            }`}
                           >
                             <img
                               src={image.path}
@@ -436,7 +480,11 @@ const ImageEditor = ({
                     className={cn(
                       "border-2 border-dashed rounded-lg p-8 text-center transition-colors",
                       isUploading
-                        ? "border-gray-400 bg-gray-50"
+                        ? isDarkMode
+                          ? "border-gray-600 bg-gray-800"
+                          : "border-gray-400 bg-gray-50"
+                        : isDarkMode
+                        ? "border-gray-600 hover:border-blue-500"
                         : "border-gray-300 hover:border-blue-400"
                     )}
                   >
@@ -456,16 +504,18 @@ const ImageEditor = ({
                       )}
                     >
                       {isUploading ? (
-                        <div className="w-8 h-8 border-2 border-gray-400 border-t-transparent rounded-full animate-spin mb-2" />
+                        <div className={`w-8 h-8 border-2 border-t-transparent rounded-full animate-spin mb-2 ${
+                          isDarkMode ? "border-gray-400" : "border-gray-400"
+                        }`} />
                       ) : (
-                        <Upload className="w-8 h-8 text-gray-500 mb-2" />
+                        <Upload className={`w-8 h-8 mb-2 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`} />
                       )}
-                      <span className="text-sm text-gray-600">
+                      <span className={`text-sm ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
                         {isUploading
                           ? "Uploading your image..."
                           : "Click to upload an image"}
                       </span>
-                      <span className="text-xs text-gray-500 mt-1">
+                      <span className={`text-xs mt-1 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                         Maximum file size: 5MB
                       </span>
                     </label>
@@ -479,10 +529,12 @@ const ImageEditor = ({
 
                   {(uploadedImageUrl || isUploading) && (
                     <div className="mt-4">
-                      <h3 className="text-sm font-medium mb-2">
+                      <h3 className={`text-sm font-medium mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>
                         Uploaded Image Preview
                       </h3>
-                      <div className="aspect-[4/3] relative rounded-lg overflow-hidden border border-gray-200">
+                      <div className={`aspect-[4/3] relative rounded-lg overflow-hidden border ${
+                        isDarkMode ? "border-gray-600" : "border-gray-200"
+                      }`}>
                         {isUploading ? (
                           <div className="w-full h-full bg-gray-100 flex items-center justify-center">
                             <div className="flex flex-col items-center">
@@ -518,10 +570,10 @@ const ImageEditor = ({
                     </div>
                   )}
                   <div>
-                    <h3 className="text-sm font-medium mb-2">Uploaded Images:</h3>
+                    <h3 className={`text-sm font-medium mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>Uploaded Images:</h3>
                     {uploadedImagesLoading ? (
                       <div className="flex items-center justify-center py-8">
-                        <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+                        <Loader2 className={`w-6 h-6 animate-spin ${isDarkMode ? "text-gray-400" : "text-gray-400"}`} />
                       </div>
                     ) : uploadedImages.length > 0 ? (
                       <div className="grid grid-cols-2 gap-4">
@@ -531,7 +583,11 @@ const ImageEditor = ({
                               onClick={() =>
                                 handleImageChange(image.path)
                               }
-                              className="cursor-pointer group aspect-[4/3] rounded-lg overflow-hidden relative border border-gray-200 bg-gray-50"
+                              className={`cursor-pointer group aspect-[4/3] rounded-lg overflow-hidden relative border ${
+                                isDarkMode
+                                  ? "border-gray-600 bg-gray-800"
+                                  : "border-gray-200 bg-gray-50"
+                              }`}
                             >
                               <Trash className="absolute group-hover:opacity-100 opacity-0 transition-opacity z-10 w-4 h-4 top-2 right-2 text-red-500" onClick={(e) =>{
                                 e.stopPropagation();
@@ -557,7 +613,7 @@ const ImageEditor = ({
                         ))}
                       </div>
                     ) : (
-                      <div className="text-center py-8 text-gray-500 text-sm">
+                      <div className={`text-center py-8 text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                         No uploaded images yet
                       </div>
                     )}
@@ -566,14 +622,18 @@ const ImageEditor = ({
               </TabsContent>
               <TabsContent value="edit" className="mt-4 space-y-4">
                 <div className="space-y-4">
-                  <h3 className="text-sm font-medium mb-2">Preview</h3>
+                  <h3 className={`text-sm font-medium mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>Preview</h3>
                   <div
                     onClick={(e) => {
                       if (isFocusPointMode) {
                         handleFocusPointClick(e);
                       }
                     }}
-                    className="aspect-[4/3] group rounded-lg overflow-hidden relative border border-gray-200 bg-gray-50"
+                    className={`aspect-[4/3] group rounded-lg overflow-hidden relative border ${
+                      isDarkMode
+                        ? "border-gray-600 bg-gray-800"
+                        : "border-gray-200 bg-gray-50"
+                    }`}
                   >
                     {previewImages ? (
                       <>
@@ -599,7 +659,7 @@ const ImageEditor = ({
                         )}
                       </>
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
+                      <div className={`w-full h-full flex items-center justify-center text-sm ${isDarkMode ? "text-gray-400" : "text-gray-400"}`}>
                         No image selected
                       </div>
                     )}
@@ -641,13 +701,18 @@ const ImageEditor = ({
                   {/* Object Fit */}
                   {
                     <div>
-                      <h3 className="text-sm font-medium mb-2">Object Fit</h3>
+                      <h3 className={`text-sm font-medium mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>Object Fit</h3>
                       <div className="flex gap-4">
                         <Button
                           variant="outline"
                           className={cn(
+                            isDarkMode
+                              ? "border-gray-600 text-gray-200 hover:bg-gray-700"
+                              : "border-gray-300 text-gray-700 hover:bg-gray-50",
                             objectFit === "cover" &&
-                              "bg-blue-50 border-blue-500"
+                              (isDarkMode
+                                ? "bg-blue-900 border-blue-500 text-blue-200 hover:bg-blue-900"
+                                : "bg-blue-50 border-blue-500 text-blue-600 hover:bg-blue-50")
                           )}
                           onClick={() => handleFitChange("cover")}
                         >
@@ -656,8 +721,13 @@ const ImageEditor = ({
                         <Button
                           variant="outline"
                           className={cn(
+                            isDarkMode
+                              ? "border-gray-600 text-gray-200 hover:bg-gray-700"
+                              : "border-gray-300 text-gray-700 hover:bg-gray-50",
                             objectFit === "contain" &&
-                              "bg-blue-50 border-blue-500"
+                              (isDarkMode
+                                ? "bg-blue-900 border-blue-500 text-blue-200 hover:bg-blue-900"
+                                : "bg-blue-50 border-blue-500 text-blue-600 hover:bg-blue-50")
                           )}
                           onClick={() => handleFitChange("contain")}
                         >
@@ -666,7 +736,13 @@ const ImageEditor = ({
                         <Button
                           variant="outline"
                           className={cn(
-                            objectFit === "fill" && "bg-blue-50 border-blue-500"
+                            isDarkMode
+                              ? "border-gray-600 text-gray-200 hover:bg-gray-700"
+                              : "border-gray-300 text-gray-700 hover:bg-gray-50",
+                            objectFit === "fill" &&
+                              (isDarkMode
+                                ? "bg-blue-900 border-blue-500 text-blue-200 hover:bg-blue-900"
+                                : "bg-blue-50 border-blue-500 text-blue-600 hover:bg-blue-50")
                           )}
                           onClick={() => handleFitChange("fill")}
                         >

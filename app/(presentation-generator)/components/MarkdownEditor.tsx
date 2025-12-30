@@ -30,7 +30,7 @@ export default function MarkdownEditor({ content, onChange }: { content: string;
         <div className="relative">
 
             <EditorContent
-                className="text-sm sm:text-base outline-none resize-none min-h-[60px] prose prose-sm max-w-none"
+                className="text-sm sm:text-base outline-none resize-none min-h-[60px] prose prose-sm prose-invert max-w-none text-gray-200"
                 editor={editor}
                 placeholder="Enter markdown content here..."
             />

@@ -8,9 +8,10 @@ interface SortableListItemProps {
     index: number;
     selectedSlide: number;
     onSlideClick: (index: any) => void;
+    isDarkMode?: boolean;
 }
 
-export function SortableListItem({ slide, index, selectedSlide, onSlideClick }: SortableListItemProps) {
+export function SortableListItem({ slide, index, selectedSlide, onSlideClick, isDarkMode = false }: SortableListItemProps) {
     const lastClickTime = useRef(0);
 
     const {
@@ -56,8 +57,12 @@ export function SortableListItem({ slide, index, selectedSlide, onSlideClick }: 
                     : 'hover:slide-box/40 border-gray-300'
                 }`}
         >
-            <span className="font-medium slide-title">Slide {index + 1}</span>
-          
+            <span className={`font-medium slide-title block ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                Slide {index + 1}
+            </span>
+            <p className={`text-sm slide-description mt-1 line-clamp-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                {slide.content?.title || 'Untitled Slide'}
+            </p>
         </div>
     );
 } 

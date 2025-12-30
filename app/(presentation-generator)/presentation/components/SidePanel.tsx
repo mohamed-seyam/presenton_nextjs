@@ -30,6 +30,7 @@ interface SidePanelProps {
   isMobilePanelOpen: boolean;
   setIsMobilePanelOpen: (value: boolean) => void;
   loading: boolean;
+  isDarkMode?: boolean;
 }
 
 const SidePanel = ({
@@ -38,6 +39,7 @@ const SidePanel = ({
   isMobilePanelOpen,
   setIsMobilePanelOpen,
   loading,
+  isDarkMode = false,
 }: SidePanelProps) => {
   const [isOpen, setIsOpen] = useState(true);
   const [active, setActive] = useState<"list" | "grid">("grid");
@@ -161,8 +163,10 @@ const SidePanel = ({
         `}
       >
         <div
-
-          className="min-w-[300px] bg-white max-w-[300px] h-[calc(100vh-120px)]  rounded-[20px] hide-scrollbar overflow-hidden slide-theme shadow-xl"
+          style={{
+            background: isDarkMode ? "#2a2a2a" : "#ffffff",
+          }}
+          className="min-w-[300px] max-w-[300px] h-[calc(100vh-120px)]  rounded-[20px] hide-scrollbar overflow-hidden slide-theme shadow-xl"
         >
           <div
             className="sticky top-0 z-40  px-6 py-4"
@@ -171,38 +175,54 @@ const SidePanel = ({
               <div className="flex items-center justify-start gap-4">
                 <ToolTip content="Image Preview">
                   <Button
-                    className={`${active === "grid"
-                      ? "bg-primary hover:opacity-90"
-                      : "bg-white hover:bg-white"
-                      }`}
+                    className={`${
+                      active === "grid"
+                        ? "bg-primary hover:opacity-90"
+                        : isDarkMode
+                        ? "bg-gray-700 hover:bg-gray-600"
+                        : "bg-white hover:bg-white"
+                    }`}
                     onClick={() => {
                       if (!isStreaming) {
-                        setActive("grid")
+                        setActive("grid");
                       }
                     }}
                   >
                     <LayoutList
-                      className={`${active === "grid" ? "text-white" : "text-black"
-                        }`}
+                      className={`${
+                        active === "grid"
+                          ? "text-white"
+                          : isDarkMode
+                          ? "text-gray-200"
+                          : "text-black"
+                      }`}
                       size={20}
                     />
                   </Button>
                 </ToolTip>
                 <ToolTip content="List Preview">
                   <Button
-                    className={`${active === "list"
-                      ? "bg-primary hover:opacity-90"
-                      : "bg-white hover:bg-white"
-                      }`}
+                    className={`${
+                      active === "list"
+                        ? "bg-primary hover:opacity-90"
+                        : isDarkMode
+                        ? "bg-gray-700 hover:bg-gray-600"
+                        : "bg-white hover:bg-white"
+                    }`}
                     onClick={() => {
                       if (!isStreaming) {
-                        setActive("list")
+                        setActive("list");
                       }
                     }}
                   >
                     <ListTree
-                      className={`${active === "list" ? "text-white" : "text-black"
-                        }`}
+                      className={`${
+                        active === "list"
+                          ? "text-white"
+                          : isDarkMode
+                          ? "text-gray-200"
+                          : "text-black"
+                      }`}
                       size={20}
                     />
                   </Button>
@@ -210,7 +230,11 @@ const SidePanel = ({
               </div>
               <X
                 onClick={handleClose}
-                className="text-[#6c7081] cursor-pointer hover:text-gray-600"
+                className={`cursor-pointer transition-colors ${
+                  isDarkMode
+                    ? "text-gray-400 hover:text-gray-200"
+                    : "text-[#6c7081] hover:text-gray-600"
+                }`}
                 size={20}
               />
             </div>
@@ -231,10 +255,10 @@ const SidePanel = ({
                       key={`${index}-${slide.type}-${slide.id}`}
                       className={`p-3 cursor-pointer rounded-lg slide-box`}
                     >
-                      <span className="font-medium slide-title">
+                      <span className={`font-medium slide-title block ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                         Slide {index + 1}
                       </span>
-                      <p className="text-sm slide-description">
+                      <p className={`text-sm slide-description mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                         {slide.content.title}
                       </p>
                     </div>
@@ -255,6 +279,7 @@ const SidePanel = ({
                             index={index}
                             selectedSlide={selectedSlide}
                             onSlideClick={onSlideClick}
+                            isDarkMode={isDarkMode}
                           />
 
                         ))}

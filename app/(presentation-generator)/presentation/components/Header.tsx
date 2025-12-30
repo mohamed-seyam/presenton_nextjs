@@ -6,7 +6,8 @@ import {
   Loader2,
   Redo2,
   Undo2,
-
+  Sun,
+  Moon,
 } from "lucide-react";
 import React, { useState } from "react";
 import Wrapper from "@/components/Wrapper";
@@ -42,9 +43,13 @@ import { clearHistory } from "@/store/slices/undoRedoSlice";
 const Header = ({
   presentation_id,
   currentSlide,
+  isDarkMode,
+  onThemeToggle,
 }: {
   presentation_id: string;
   currentSlide?: number;
+  isDarkMode?: boolean;
+  onThemeToggle?: () => void;
 }) => {
   const [open, setOpen] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -185,6 +190,22 @@ const Header = ({
 
   const MenuItems = ({ mobile }: { mobile: boolean }) => (
     <div className="flex flex-col lg:flex-row items-center gap-4">
+      {/* Theme Toggle */}
+      {onThemeToggle && (
+        <ToolTip content={isDarkMode ? "Light mode" : "Dark mode"}>
+          <button
+            onClick={onThemeToggle}
+            className="text-white hover:opacity-80 transition-opacity"
+            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDarkMode ? (
+              <Sun className="w-6 h-6" />
+            ) : (
+              <Moon className="w-6 h-6" />
+            )}
+          </button>
+        </ToolTip>
+      )}
       {/* undo redo */}
       <button onClick={handleReGenerate} disabled={isStreaming || !presentationData} className="text-white  disabled:opacity-50" >
 
@@ -260,8 +281,11 @@ const Header = ({
         duration={40}
       />
       <div
-
-        className="bg-primary w-full shadow-lg sticky top-0 ">
+        style={{
+          background: isDarkMode ? "#1a1a1a" : undefined,
+        }}
+        className={`${isDarkMode ? "" : "bg-primary"} w-full shadow-lg sticky top-0`}
+      >
 
         <Announcement />
         <Wrapper className="flex items-center justify-between py-1">

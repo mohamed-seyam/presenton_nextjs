@@ -20,6 +20,7 @@ interface PresentationModeProps {
   onFullscreenToggle: () => void;
   onExit: () => void;
   onSlideChange: (slideNumber: number) => void;
+  isDarkMode?: boolean;
 }
 
 const PresentationMode: React.FC<PresentationModeProps> = ({
@@ -31,6 +32,7 @@ const PresentationMode: React.FC<PresentationModeProps> = ({
   onFullscreenToggle,
   onExit,
   onSlideChange,
+  isDarkMode = false,
 
 }) => {
   const { renderSlideContent } = useTemplateLayouts();
@@ -118,7 +120,10 @@ const PresentationMode: React.FC<PresentationModeProps> = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black flex flex-col"
+      className="fixed inset-0 flex flex-col"
+      style={{
+        background: isDarkMode ? "#1a1a1a" : "#000000",
+      }}
       tabIndex={0}
       onClick={handleSlideClick}
     >

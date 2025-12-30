@@ -12,7 +12,7 @@ interface EditableLayoutWrapperProps {
     slideData: any;
     isEditMode?: boolean;
     properties?: any;
-    
+    isDarkMode?: boolean;
 }
 
 interface EditableElement {
@@ -29,7 +29,7 @@ const EditableLayoutWrapper: React.FC<EditableLayoutWrapperProps> = ({
     slideIndex,
     slideData,
     properties,
-    
+    isDarkMode = false,
 }) => {
     const dispatch = useDispatch();
     const containerRef = useRef<HTMLDivElement>(null);
@@ -450,6 +450,7 @@ const EditableLayoutWrapper: React.FC<EditableLayoutWrapperProps> = ({
                     onClose={handleEditorClose}
                     onImageChange={handleImageChange}
                     onFocusPointClick={handleFocusPointClick}
+                    isDarkMode={isDarkMode}
                 >
                 </ImageEditor>
             )}
@@ -460,6 +461,7 @@ const EditableLayoutWrapper: React.FC<EditableLayoutWrapperProps> = ({
                     icon_prompt={activeEditor.data?.__icon_query__ ? [activeEditor.data.__icon_query__] : []}
                     onClose={handleEditorClose}
                     onIconChange={handleIconChange}
+                    isDarkMode={isDarkMode}
                 >
 
                 </IconsEditor>

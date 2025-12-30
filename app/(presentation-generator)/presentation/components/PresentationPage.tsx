@@ -33,6 +33,7 @@ const PresentationPage: React.FC<PresentationPageProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [error, setError] = useState(false);
   const [isMobilePanelOpen, setIsMobilePanelOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const {getCustomTemplateFonts} = useLayout();
  
   const { presentationData, isStreaming } = useSelector(
@@ -100,6 +101,7 @@ const PresentationPage: React.FC<PresentationPageProps> = ({
         onFullscreenToggle={toggleFullscreen}
         onExit={handlePresentExit}
         onSlideChange={onSlideChange}
+        isDarkMode={isDarkMode}
       />
     );
   }
@@ -128,12 +130,17 @@ const PresentationPage: React.FC<PresentationPageProps> = ({
         {isSaving && <Loader2 className="w-6 h-6 animate-spin text-blue-500" />}
       </div>
 
-      <Header presentation_id={presentation_id} currentSlide={selectedSlide} />
+      <Header
+        presentation_id={presentation_id}
+        currentSlide={selectedSlide}
+        isDarkMode={isDarkMode}
+        onThemeToggle={() => setIsDarkMode(!isDarkMode)}
+      />
       <Help />
 
       <div
         style={{
-          background: "#c8c7c9",
+          background: isDarkMode ? "#1a1a1a" : "#c8c7c9",
         }}
         className="flex flex-1 relative pt-6"
       >
@@ -143,6 +150,7 @@ const PresentationPage: React.FC<PresentationPageProps> = ({
           loading={loading}
           isMobilePanelOpen={isMobilePanelOpen}
           setIsMobilePanelOpen={setIsMobilePanelOpen}
+          isDarkMode={isDarkMode}
         />
         
         <div className="flex-1 h-[calc(100vh-100px)] overflow-y-auto">
@@ -176,6 +184,7 @@ const PresentationPage: React.FC<PresentationPageProps> = ({
                       slide={slide}
                       index={index}
                       presentationId={presentation_id}
+                      isDarkMode={isDarkMode}
                     />
                   ))}
               </>

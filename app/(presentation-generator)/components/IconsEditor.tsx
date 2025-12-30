@@ -16,13 +16,14 @@ interface IconsEditorProps {
   icon_prompt?: string[] | null;
   onClose?: () => void;
   onIconChange?: (newIconUrl: string, query?: string) => void;
+  isDarkMode?: boolean;
 }
 
 const IconsEditor = ({
   icon_prompt,
   onClose,
   onIconChange,
-
+  isDarkMode = false,
 }: IconsEditorProps) => {
   // State management
   const [icons, setIcons] = useState<string[]>([]);
@@ -90,11 +91,14 @@ const IconsEditor = ({
         <SheetContent
           side="right"
           className="w-[400px]"
+          style={{
+            background: isDarkMode ? "#2a2a2a" : "#ffffff",
+          }}
           onOpenAutoFocus={(e) => e.preventDefault()}
           onClick={(e) => e.stopPropagation()}
         >
           <SheetHeader>
-            <SheetTitle>Choose Icon</SheetTitle>
+            <SheetTitle className={isDarkMode ? "text-gray-200" : "text-gray-800"}>Choose Icon</SheetTitle>
           </SheetHeader>
 
           <div className="mt-6 space-y-4">
@@ -107,19 +111,27 @@ const IconsEditor = ({
               }}
             >
               <div className="relative mb-3">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
+                <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`} />
                 <Input
                   placeholder="Search icons..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
-                  className="pl-10"
+                  className={`pl-10 ${
+                    isDarkMode
+                      ? "bg-gray-800 border-gray-600 text-gray-200 placeholder:text-gray-400"
+                      : ""
+                  }`}
                 />
               </div>
               <Button
                 type="submit"
                 variant="outline"
-                className="w-full text-semibold text-[#51459e]"
+                className={`w-full text-semibold ${
+                  isDarkMode
+                    ? "bg-gray-800 border-gray-600 text-gray-200 hover:bg-gray-700"
+                    : "text-[#51459e]"
+                }`}
                 onClick={(e) => e.stopPropagation()}
               >
                 Search
@@ -143,7 +155,9 @@ const IconsEditor = ({
                         e.stopPropagation();
                         handleIconChange(iconSrc);
                       }}
-                      className="w-12 h-12 cursor-pointer group relative rounded-lg overflow-hidden hover:bg-gray-100 p-2 transition-colors"
+                      className={`w-12 h-12 cursor-pointer group relative rounded-lg overflow-hidden p-2 transition-colors ${
+                        isDarkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"
+                      }`}
                     >
                       <img
                         src={iconSrc}
@@ -154,7 +168,7 @@ const IconsEditor = ({
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center w-full h-[60vh] text-center text-gray-500 space-y-4">
+                <div className={`flex flex-col items-center justify-center w-full h-[60vh] text-center space-y-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                   <Search className="w-12 h-12 text-gray-400" />
                   <p className="text-sm">No icons found for your search.</p>
                   <p className="text-xs">Try refining your search query.</p>
