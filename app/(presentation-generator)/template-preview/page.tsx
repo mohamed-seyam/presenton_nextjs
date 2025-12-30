@@ -93,13 +93,13 @@ const LayoutPreview = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Header />
       <div className=" sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto border-b px-6 py-6">
+        <div className="max-w-7xl mx-auto border-b border-border px-6 py-6">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900">All Templates</h1>
-            <p className="text-gray-600 mt-2">
+            <h1 className="text-3xl font-bold text-foreground">All Templates</h1>
+            <p className="text-muted-foreground mt-2">
               {layoutTemplates.length} templates
             </p>
           </div>
@@ -108,8 +108,8 @@ const LayoutPreview = () => {
         <section className="h-full pt-8 pb-8 flex justify-center items-center">
           <div className="max-w-7xl mx-auto px-6 py-6 w-full">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Custom AI Templates</h2>
-              <button className="text-sm text-gray-800 hover:text-blue-600 transition-colors flex items-center gap-2 group" onClick={() => {
+              <h2 className="text-xl font-semibold text-foreground">Custom AI Templates</h2>
+              <button className="text-sm text-foreground hover:text-primary transition-colors flex items-center gap-2 group" onClick={() => {
                 trackEvent(MixpanelEvent.Navigation, { from: pathname, to: `/custom-template` });
                 router.push(`/custom-template`)
               }}>
@@ -127,7 +127,7 @@ const LayoutPreview = () => {
                   return (
                     <Card
                       key={template.templateID}
-                      className="cursor-pointer hover:shadow-md transition-all duration-200 group"
+                      className="cursor-pointer hover:shadow-md transition-all duration-200 group bg-card border-border hover:border-primary"
                       onClick={() => {
                         trackEvent(MixpanelEvent.Navigation, { from: pathname, to: `/template-preview/${template.templateID}` });
                         router.push(`/template-preview/${template.templateID}`)
@@ -135,25 +135,25 @@ const LayoutPreview = () => {
                     >
                       <div className="p-6">
                         <div className="flex items-center justify-between mb-3">
-                          <h3 className="text-lg font-semibold text-gray-900 capitalize group-hover:text-blue-600 transition-colors">
+                          <h3 className="text-lg font-semibold text-foreground capitalize group-hover:text-primary transition-colors">
                             {displayName}
                           </h3>
 
                           <div className="flex items-center gap-2">
-                            <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                            <span className="px-2 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
                               {template.layouts.length}
                             </span>
-                            <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                            <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
-                          <p className="text-xs text-gray-600  ">ID: {template.templateID}</p>
-                          <Copy className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" onClick={() => {
+                          <p className="text-xs text-muted-foreground">ID: {template.templateID}</p>
+                          <Copy className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" onClick={() => {
                             navigator.clipboard.writeText(template.templateID);
                             toast.success("Copied to clipboard");
                           }} />
                         </div>
-                        <p className="text-sm text-gray-600 my-4">
+                        <p className="text-sm text-muted-foreground my-4">
                           {displayDescription}
                         </p>
                         <div className="grid grid-cols-2 gap-2 mb-3 min-h-[300px]">
@@ -168,7 +168,7 @@ const LayoutPreview = () => {
                               return (
                                 <div
                                   key={`${templateID}-${index}`}
-                                  className=" relative border border-gray-200 cursor-pointer overflow-hidden aspect-video"
+                                  className=" relative border border-border cursor-pointer overflow-hidden aspect-video"
                                 >
                                   <div className="absolute cursor-pointer bg-transparent z-40 top-0 left-0 w-full h-full" />
                                   <div className="transform scale-[0.2] flex justify-center items-center origin-top-left  w-[500%] h-[500%]">
@@ -184,7 +184,7 @@ const LayoutPreview = () => {
                 })
               ) : (
                 <Card
-                  className="cursor-pointer hover:shadow-md transition-all border-blue-500 duration-200 group"
+                  className="cursor-pointer hover:shadow-md transition-all border-primary duration-200 group bg-card"
                   onClick={() => {
                     trackEvent(MixpanelEvent.Navigation, { from: pathname, to: `/custom-template` });
                     router.push(`/custom-template`)
@@ -192,14 +192,14 @@ const LayoutPreview = () => {
                 >
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-lg font-semibold text-gray-900 capitalize group-hover:text-blue-600 transition-colors">
+                      <h3 className="text-lg font-semibold text-foreground capitalize group-hover:text-primary transition-colors">
                         Create Custom Template
                       </h3>
                       <div className="flex items-center gap-2">
-                        <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                        <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                       </div>
                     </div>
-                    <p className="text-sm text-gray-600 mb-4">
+                    <p className="text-sm text-muted-foreground mb-4">
                       Create your first custom template
                     </p>
                   </div>
@@ -212,7 +212,7 @@ const LayoutPreview = () => {
         {/* In Built Templates */}
         <section className="h-full pt-8 flex justify-center items-center">
           <div className="max-w-7xl mx-auto px-6 py-6 w-full">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Inbuilt Templates</h2>
+            <h2 className="text-xl font-semibold text-foreground mb-4">Inbuilt Templates</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {inBuiltTemplates.map((template) => {
                 const isCustom = template.templateID.toLowerCase().startsWith("custom-");
@@ -223,7 +223,7 @@ const LayoutPreview = () => {
                 return (
                   <Card
                     key={template.templateID}
-                    className="cursor-pointer hover:shadow-md transition-all duration-200 group"
+                    className="cursor-pointer hover:shadow-md transition-all duration-200 group bg-card border-border hover:border-primary"
                     onClick={() => {
                       trackEvent(MixpanelEvent.Navigation, { from: pathname, to: `/template-preview/${template.templateID}` });
                       router.push(`/template-preview/${template.templateID}`)
@@ -231,17 +231,17 @@ const LayoutPreview = () => {
                   >
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-lg font-semibold text-gray-900 capitalize group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-lg font-semibold text-foreground capitalize group-hover:text-primary transition-colors">
                           {displayName}
                         </h3>
                         <div className="flex items-center gap-2">
-                          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                          <span className="px-2 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
                             {template.layouts.length}
                           </span>
-                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                         </div>
                       </div>
-                      <p className="text-sm text-gray-600 mb-4">
+                      <p className="text-sm text-muted-foreground mb-4">
                         {displayDescription}
                       </p>
                       <div className="grid grid-cols-2 gap-2 mb-3 min-h-[300px]">
@@ -256,7 +256,7 @@ const LayoutPreview = () => {
                             return (
                               <div
                                 key={`${templateID}-${index}`}
-                                className=" relative border border-gray-200 cursor-pointer overflow-hidden aspect-video"
+                                className=" relative border border-border cursor-pointer overflow-hidden aspect-video"
                               >
                                 <div className="absolute cursor-pointer bg-transparent z-40 top-0 left-0 w-full h-full" />
                                 <div className="transform scale-[0.2] flex justify-center items-center origin-top-left  w-[500%] h-[500%]">

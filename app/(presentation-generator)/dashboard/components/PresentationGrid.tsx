@@ -29,11 +29,11 @@ export const PresentationGrid = ({
   };
 
   const ShimmerCard = () => (
-    <div className="flex flex-col gap-4 min-h-[200px] bg-white/70 rounded-lg p-4 animate-pulse">
-      <div className="w-full h-24 bg-gray-200 rounded-lg"></div>
+    <div className="flex flex-col gap-4 min-h-[200px] bg-card border border-border rounded-lg p-4 animate-pulse">
+      <div className="w-full h-24 bg-muted rounded-lg"></div>
       <div className="space-y-3">
-        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+        <div className="h-4 bg-muted rounded w-3/4"></div>
+        <div className="h-3 bg-muted rounded w-1/2"></div>
       </div>
     </div>
   );
@@ -41,16 +41,16 @@ export const PresentationGrid = ({
   const CreateNewCard = () => (
     <div
       onClick={handleCreateNewPresentation}
-      className="flex flex-col gap-4 min-h-[200px] cursor-pointer group border border-gray-400 hover:border-primary/60 bg-white/70 hover:bg-white/80 rounded-lg items-center justify-center transition-all duration-300"
+      className="flex flex-col gap-4 min-h-[200px] cursor-pointer group border border-border hover:border-primary bg-card hover:bg-card/80 rounded-lg items-center justify-center transition-all duration-300"
     >
-      <div className="rounded-full bg-gray-200 group-hover:bg-primary/10 p-4 transition-all duration-300">
-        <PlusIcon className="w-8 h-8 text-gray-500 group-hover:text-primary transition-all duration-300" />
+      <div className="rounded-full bg-muted group-hover:bg-primary/20 p-4 transition-all duration-300">
+        <PlusIcon className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-all duration-300" />
       </div>
       <div className="text-center">
-        <h3 className="font-semibold text-gray-700 group-hover:text-gray-900 mb-1">
+        <h3 className="font-semibold text-foreground group-hover:text-primary mb-1">
           Create {type === "slide" ? "New" : "Video"} Presentation
         </h3>
-        <p className="text-sm text-gray-500 group-hover:text-gray-600 px-4">
+        <p className="text-sm text-muted-foreground group-hover:text-foreground px-4">
           Start from scratch and bring your ideas to life
         </p>
       </div>
@@ -60,13 +60,13 @@ export const PresentationGrid = ({
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="flex flex-col gap-4 min-h-[200px] cursor-pointer group border border-gray-400 bg-white/70 rounded-lg items-center justify-center animate-pulse">
-          <div className="rounded-full bg-gray-200 p-4">
+        <div className="flex flex-col gap-4 min-h-[200px] cursor-pointer group border border-border bg-card rounded-lg items-center justify-center animate-pulse">
+          <div className="rounded-full bg-muted p-4">
             <div className="w-8 h-8" />
           </div>
           <div className="text-center space-y-2">
-            <div className="h-4 bg-gray-200 rounded w-32 mx-auto"></div>
-            <div className="h-3 bg-gray-200 rounded w-48 mx-auto"></div>
+            <div className="h-4 bg-muted rounded w-32 mx-auto"></div>
+            <div className="h-3 bg-muted rounded w-48 mx-auto"></div>
           </div>
         </div>
         {[...Array(3)].map((_, i) => (
@@ -81,7 +81,7 @@ export const PresentationGrid = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <CreateNewCard />
         <div className="col-span-3 flex items-center justify-center">
-          <div className="text-center text-gray-500">
+          <div className="text-center text-muted-foreground">
             <p className="mb-2">{error}</p>
             <button
               onClick={() => window.location.reload()}

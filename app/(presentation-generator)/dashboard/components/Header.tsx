@@ -8,20 +8,17 @@ import { usePathname } from "next/navigation";
 import HeaderNav from "@/app/(presentation-generator)/components/HeaderNab";
 import { Layout, FilePlus2 } from "lucide-react";
 import { trackEvent, MixpanelEvent } from "@/utils/mixpanel";
+import WakebLogo from "@/components/WakebLogo";
 const Header = () => {
   const pathname = usePathname();
   return (
-    <div className="bg-primary w-full shadow-lg sticky top-0 z-50">
+<div className="bg-[#0A0D20] w-full shadow-lg sticky top-0 z-50">
       <Wrapper>
         <div className="flex items-center justify-between py-1">
           <div className="flex items-center gap-3">
             {(pathname !== "/upload" && pathname !== "/dashboard") && <BackBtn />}
             <Link href="/dashboard" onClick={() => trackEvent(MixpanelEvent.Navigation, { from: pathname, to: "/dashboard" })}>
-              <img
-                src="/wakeb-logo.jpg"
-                alt="Slidegen logo"
-                className="h-16 rounded-lg"
-              />
+              <WakebLogo width={150} height={40} />
             </Link>
           </div>
           <div className="flex items-center gap-3">

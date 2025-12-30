@@ -46,12 +46,12 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#E9E8F8]">
+    <div className="min-h-screen bg-background">
       <Header />
       <Wrapper>
         <main className="container mx-auto px-4 py-8">
           <section>
-            <h2 className="text-2xl font-roboto font-medium mb-6">
+            <h2 className="text-2xl font-roboto font-medium mb-6 text-foreground">
               Slide Presentation
             </h2>
             <PresentationGrid

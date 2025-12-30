@@ -87,7 +87,7 @@ export default function OpenAIConfig({
     <div className="space-y-6">
       {/* API Key Input */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           OpenAI API Key
         </label>
         <div className="relative">
@@ -95,12 +95,12 @@ export default function OpenAIConfig({
             type="text"
             value={openaiApiKey}
             onChange={(e) => onApiKeyChange(e.target.value)}
-            className="w-full px-4 py-2.5 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors"
+            className="w-full px-4 py-2.5 outline-none bg-background text-foreground border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
             placeholder="Enter your API key"
           />
         </div>
-        <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-          <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+        <p className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+          <span className="block w-1 h-1 rounded-full bg-muted-foreground/50"></span>
           Your API key will be stored locally and never shared
         </p>
       </div>
@@ -114,8 +114,8 @@ export default function OpenAIConfig({
             onClick={fetchAvailableModels}
             disabled={modelsLoading || !openaiApiKey}
             className={`w-full py-2.5 px-4 rounded-lg transition-all duration-200 border-2 ${modelsLoading || !openaiApiKey
-              ? "bg-gray-100 border-gray-300 cursor-not-allowed text-gray-500"
-              : "bg-white border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-2 focus:ring-blue-500/20"
+              ? "bg-muted border-border cursor-not-allowed text-muted-foreground"
+              : "bg-background border-primary text-primary hover:bg-primary/10 focus:ring-2 focus:ring-primary/20"
               }`}
           >
             {modelsLoading ? (
@@ -132,8 +132,8 @@ export default function OpenAIConfig({
 
       {/* Show message if no models found */}
       {modelsChecked && availableModels.length === 0 && (
-        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-sm text-yellow-800">
+        <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+          <p className="text-sm text-foreground">
             No models found. Please make sure your API key is valid and has access to OpenAI models.
           </p>
         </div>
@@ -142,7 +142,7 @@ export default function OpenAIConfig({
       {/* Model Selection - only show if models are available */}
       {modelsChecked && availableModels.length > 0 ? (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
+          <label className="block text-sm font-medium text-foreground mb-3">
             Select OpenAI Model
           </label>
           <div className="w-full">
@@ -155,16 +155,16 @@ export default function OpenAIConfig({
                   variant="outline"
                   role="combobox"
                   aria-expanded={openModelSelect}
-                  className="w-full h-12 px-4 py-4 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors hover:border-gray-400 justify-between"
+                  className="w-full h-12 px-4 py-4 outline-none bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors hover:border-primary/50 justify-between"
                 >
                   <div className="flex gap-3 items-center">
-                    <span className="text-sm font-medium text-gray-900">
+                    <span className="text-sm font-medium text-foreground">
                       {openaiModel
                         ? availableModels.find(model => model === openaiModel) || openaiModel
                         : "Select a model"}
                     </span>
                   </div>
-                  <ChevronsUpDown className="w-4 h-4 text-gray-500" />
+                  <ChevronsUpDown className="w-4 h-4 text-muted-foreground" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent
@@ -197,7 +197,7 @@ export default function OpenAIConfig({
                           <div className="flex gap-3 items-center">
                             <div className="flex flex-col space-y-1 flex-1">
                               <div className="flex items-center justify-between gap-2">
-                                <span className="text-sm font-medium text-gray-900">
+                                <span className="text-sm font-medium text-foreground">
                                   {model}
                                 </span>
                               </div>
@@ -216,8 +216,8 @@ export default function OpenAIConfig({
 
       {/* Web Grounding Toggle - show at the end, below models dropdown */}
       <div>
-        <div className="flex items-center justify-between mb-4 bg-green-50 p-2 rounded-sm">
-          <label className="text-sm font-medium text-gray-700">
+        <div className="flex items-center justify-between mb-4 bg-primary/10 p-3 rounded-md border border-primary/30">
+          <label className="text-sm font-medium text-foreground">
             Enable Web Grounding
           </label>
           <Switch
@@ -225,8 +225,8 @@ export default function OpenAIConfig({
             onCheckedChange={(checked) => onInputChange(checked, "web_grounding")}
           />
         </div>
-        <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-          <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+        <p className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+          <span className="block w-1 h-1 rounded-full bg-muted-foreground/50"></span>
           If enabled, the model can use web search grounding when available.
         </p>
       </div>

@@ -140,7 +140,7 @@ export default function LLMProviderSelection({
   return (
     <div className="h-full flex flex-col mt-10">
       {/* Provider Selection - Fixed Header */}
-      <div className="p-2 rounded-2xl border border-gray-200">
+      <div className="p-2 rounded-2xl border border-border">
         <Tabs
           value={llmConfig.LLM || "openai"}
           onValueChange={handleProviderChange}
@@ -220,8 +220,8 @@ export default function LLMProviderSelection({
 
         {/* Image Generation Toggle */}
         <div className="my-8">
-          <div className="flex items-center justify-between mb-4 bg-green-50 p-2 rounded-sm">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="flex items-center justify-between mb-4 bg-primary/10 p-3 rounded-md border border-primary/30">
+            <label className="text-sm font-medium text-foreground">
               Disable Image Generation
             </label>
             <Switch
@@ -234,8 +234,8 @@ export default function LLMProviderSelection({
               }}
             />
           </div>
-          <p className="text-sm text-gray-500 flex items-center gap-2">
-            <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+          <p className="text-sm text-muted-foreground flex items-center gap-2">
+            <span className="block w-1 h-1 rounded-full bg-muted-foreground/50"></span>
             When enabled, slides will not include automatically generated images.
           </p>
         </div>
@@ -244,7 +244,7 @@ export default function LLMProviderSelection({
           <>
             {/* Image Provider Selection */}
             <div className="my-8">
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-foreground mb-3">
                 Select Image Provider
               </label>
               <div className="w-full">
@@ -257,17 +257,17 @@ export default function LLMProviderSelection({
                       variant="outline"
                       role="combobox"
                       aria-expanded={openImageProviderSelect}
-                      className="w-full h-12 px-4 py-4 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors hover:border-gray-400 justify-between"
+                      className="w-full h-12 px-4 py-4 outline-none border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors hover:border-primary/50 justify-between bg-background text-foreground"
                     >
                       <div className="flex gap-3 items-center">
-                        <span className="text-sm font-medium text-gray-900">
+                        <span className="text-sm font-medium text-foreground">
                           {llmConfig.IMAGE_PROVIDER
                             ? IMAGE_PROVIDERS[llmConfig.IMAGE_PROVIDER]?.label ||
                             llmConfig.IMAGE_PROVIDER
                             : "Select image provider"}
                         </span>
                       </div>
-                      <ChevronsUpDown className="w-4 h-4 text-gray-500" />
+                      <ChevronsUpDown className="w-4 h-4 text-muted-foreground" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent
@@ -301,11 +301,11 @@ export default function LLMProviderSelection({
                                 <div className="flex gap-3 items-center">
                                   <div className="flex flex-col space-y-1 flex-1">
                                     <div className="flex items-center justify-between gap-2">
-                                      <span className="text-sm font-medium text-gray-900 capitalize">
+                                      <span className="text-sm font-medium text-foreground capitalize">
                                         {provider.label}
                                       </span>
                                     </div>
-                                    <span className="text-xs text-gray-600 leading-relaxed">
+                                    <span className="text-xs text-muted-foreground leading-relaxed">
                                       {provider.description}
                                     </span>
                                   </div>
@@ -342,14 +342,14 @@ export default function LLMProviderSelection({
                     {/* URL Input for providers that need it */}
                     {provider.requiresUrl && provider.urlField && (
                       <div className="mb-8">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-foreground mb-2">
                           {provider.urlFieldLabel}
                         </label>
                         <div className="relative">
                           <input
                             type="text"
                             placeholder={`Enter your ${provider.urlFieldLabel}`}
-                            className="w-full px-4 py-2.5 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-2.5 outline-none border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-background text-foreground"
                             value={
                               provider.urlField === "FLUX_URL"
                                 ? llmConfig.FLUX_URL || ""
@@ -362,8 +362,8 @@ export default function LLMProviderSelection({
                             }}
                           />
                         </div>
-                        <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-                          <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+                        <p className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+                          <span className="block w-1 h-1 rounded-full bg-muted-foreground/50"></span>
                           API endpoint URL for {provider.label}
                         </p>
                       </div>
@@ -372,14 +372,14 @@ export default function LLMProviderSelection({
                     {/* API Key Input */}
                     {provider.requiresApiKey && provider.apiKeyField && (
                       <div className="mb-8">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-foreground mb-2">
                           {provider.apiKeyFieldLabel}
                         </label>
                         <div className="relative">
                           <input
                             type="text"
                             placeholder={`Enter your ${provider.apiKeyFieldLabel}`}
-                            className="w-full px-4 py-2.5 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-2.5 outline-none border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-background text-foreground"
                             value={
                               provider.apiKeyField === "PEXELS_API_KEY"
                                 ? llmConfig.PEXELS_API_KEY || ""
@@ -400,8 +400,8 @@ export default function LLMProviderSelection({
                             }}
                           />
                         </div>
-                        <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-                          <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+                        <p className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+                          <span className="block w-1 h-1 rounded-full bg-muted-foreground/50"></span>
                           API key for {provider.label} image generation
                         </p>
                       </div>
@@ -413,14 +413,14 @@ export default function LLMProviderSelection({
         )}
 
         {/* Model Information */}
-        <div className="mb-8 p-4 bg-blue-50 rounded-lg border border-blue-100">
+        <div className="mb-8 p-4 bg-primary/10 rounded-lg border border-primary/30">
           <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-blue-500 mt-0.5" />
+            <Info className="w-5 h-5 text-primary mt-0.5" />
             <div>
-              <h3 className="text-sm font-medium text-blue-900 mb-1">
+              <h3 className="text-sm font-medium text-foreground mb-1">
                 Selected Models
               </h3>
-              <p className="text-sm text-blue-700">
+              <p className="text-sm text-muted-foreground">
                 Using{" "}
                 {llmConfig.LLM === "ollama"
                   ? llmConfig.OLLAMA_MODEL ?? "xxxxx"

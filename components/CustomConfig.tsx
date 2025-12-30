@@ -95,7 +95,7 @@ export default function CustomConfig({
     <div className="space-y-6">
       {/* URL Input */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           OpenAI Compatible URL
         </label>
         <div className="relative">
@@ -103,7 +103,7 @@ export default function CustomConfig({
             type="text"
             required
             placeholder="Enter your URL"
-            className="w-full px-4 py-2.5 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors"
+            className="w-full px-4 py-2.5 outline-none bg-background text-foreground border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
             value={customLlmUrl}
             onChange={(e) => onUrlChange(e.target.value)}
           />
@@ -112,7 +112,7 @@ export default function CustomConfig({
 
       {/* API Key Input */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           OpenAI Compatible API Key
         </label>
         <div className="relative">
@@ -120,7 +120,7 @@ export default function CustomConfig({
             type="text"
             required
             placeholder="Enter your API Key"
-            className="w-full px-4 py-2.5 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors"
+            className="w-full px-4 py-2.5 outline-none bg-background text-foreground border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
             value={customLlmApiKey}
             onChange={(e) => onApiKeyChange(e.target.value)}
           />
@@ -134,8 +134,8 @@ export default function CustomConfig({
             onClick={fetchCustomModels}
             disabled={customModelsLoading || !customLlmUrl}
             className={`w-full py-2.5 px-4 rounded-lg transition-all duration-200 border-2 ${customModelsLoading || !customLlmUrl
-              ? "bg-gray-100 border-gray-300 cursor-not-allowed text-gray-500"
-              : "bg-white border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-2 focus:ring-blue-500/20"
+              ? "bg-muted border-border cursor-not-allowed text-muted-foreground"
+              : "bg-background border-primary text-primary hover:bg-primary/10 focus:ring-2 focus:ring-primary/20"
               }`}
           >
             {customModelsLoading ? (
@@ -152,8 +152,8 @@ export default function CustomConfig({
 
       {/* Show message if no models found */}
       {customModelsChecked && customModels.length === 0 && (
-        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-sm text-yellow-800">
+        <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+          <p className="text-sm text-foreground">
             No models found. Please make sure your API key is valid and has access to models.
           </p>
         </div>
@@ -162,14 +162,14 @@ export default function CustomConfig({
       {/* Model selection dropdown - only show if models are available */}
       {customModelsChecked && customModels.length > 0 && (
         <div className="mb-4">
-          <div className="mb-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-            <p className="text-sm text-amber-800">
+          <div className="mb-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+            <p className="text-sm text-foreground">
               <strong>Important:</strong> Only models with function
               calling capabilities (tool calls) or JSON schema support
               will work.
             </p>
           </div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Select Model
           </label>
           <div className="w-full">
@@ -182,12 +182,12 @@ export default function CustomConfig({
                   variant="outline"
                   role="combobox"
                   aria-expanded={openModelSelect}
-                  className="w-full h-12 px-4 py-4 outline-none border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors hover:border-gray-400 justify-between"
+                  className="w-full h-12 px-4 py-4 outline-none bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors hover:border-primary/50 justify-between"
                 >
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="text-sm font-medium text-foreground">
                     {customModel || "Select a model"}
                   </span>
-                  <ChevronsUpDown className="w-4 h-4 text-gray-500" />
+                  <ChevronsUpDown className="w-4 h-4 text-muted-foreground" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent
@@ -217,7 +217,7 @@ export default function CustomConfig({
                                 : "opacity-0"
                             )}
                           />
-                          <span className="text-sm font-medium text-gray-900">
+                          <span className="text-sm font-medium text-foreground">
                             {model}
                           </span>
                         </CommandItem>
@@ -233,8 +233,8 @@ export default function CustomConfig({
 
       {/* Tool Calls Toggle */}
       <div>
-        <div className="flex items-center justify-between mb-4 bg-green-50 p-2 rounded-sm">
-          <label className="text-sm font-medium text-gray-700">
+        <div className="flex items-center justify-between mb-4 bg-primary/10 p-3 rounded-md border border-primary/30">
+          <label className="text-sm font-medium text-foreground">
             Use Tool Calls
           </label>
           <Switch
@@ -242,15 +242,15 @@ export default function CustomConfig({
             onCheckedChange={(checked) => onInputChange(checked, "tool_calls")}
           />
         </div>
-        <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-          <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+        <p className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+          <span className="block w-1 h-1 rounded-full bg-muted-foreground/50"></span>
           If enabled, Tool Calls will be used instead of JSON Schema for Structured Output.
         </p>
       </div>
       {/* Disable Thinking Toggle */}
       <div>
-        <div className="flex items-center justify-between mb-4 bg-green-50 p-2 rounded-sm">
-          <label className="text-sm font-medium text-gray-700">
+        <div className="flex items-center justify-between mb-4 bg-primary/10 p-3 rounded-md border border-primary/30">
+          <label className="text-sm font-medium text-foreground">
             Disable Thinking
           </label>
           <Switch
@@ -258,8 +258,8 @@ export default function CustomConfig({
             onCheckedChange={(checked) => onInputChange(checked, "disable_thinking")}
           />
         </div>
-        <p className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-          <span className="block w-1 h-1 rounded-full bg-gray-400"></span>
+        <p className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+          <span className="block w-1 h-1 rounded-full bg-muted-foreground/50"></span>
           If enabled, Thinking will be disabled.
         </p>
       </div>

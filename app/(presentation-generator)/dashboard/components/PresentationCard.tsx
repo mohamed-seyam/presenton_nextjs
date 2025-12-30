@@ -57,25 +57,25 @@ export const PresentationCard = ({
     <Card
       onClick={handlePreview}
 
-      className="bg-white rounded-[8px] slide-theme cursor-pointer overflow-hidden p-4"
+      className="bg-card border border-border rounded-[8px] slide-theme cursor-pointer overflow-hidden p-4 hover:border-primary transition-colors"
 
     >
       <div className="space-y-4">
         {/* Date */}
         <div className="flex items-center justify-between">
-          <p className="text-[#667085] text-sm font-roboto pt-2">
+          <p className="text-muted-foreground text-sm font-roboto pt-2">
             {new Date(created_at).toLocaleDateString()}
           </p>
           <Popover>
-            <PopoverTrigger className="w-6 h-6 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-700" onClick={(e) => e.stopPropagation()}>
+            <PopoverTrigger className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground" onClick={(e) => e.stopPropagation()}>
 
 
-              <DotsVerticalIcon className="w-4 h-4 text-gray-500" />
+              <DotsVerticalIcon className="w-4 h-4 text-muted-foreground" />
 
             </PopoverTrigger>
-            <PopoverContent align="end" className="bg-white w-[200px]">
+            <PopoverContent align="end" className="bg-card border-border w-[200px]">
               <button
-                className="flex items-center justify-between w-full px-2 py-1 hover:bg-gray-100"
+                className="flex items-center justify-between w-full px-2 py-1 hover:bg-primary/10 rounded text-foreground"
                 onClick={handleDelete}
               >
                 <p>Delete</p>
@@ -85,7 +85,7 @@ export const PresentationCard = ({
           </Popover>
         </div>
 
-        <div className=" slide-box relative overflow-hidden border aspect-video"
+        <div className=" slide-box relative overflow-hidden border border-border aspect-video"
           style={{
 
           }}
@@ -106,11 +106,12 @@ export const PresentationCard = ({
           >
             <path
               d="M15.75 0.75V6C15.75 6.42 16.08 6.75 16.5 6.75H21.75M9.75 17.25H7.5C7.08 17.25 6.75 16.92 6.75 16.5V12C6.75 11.58 7.08 11.25 7.5 11.25H13.5C13.92 11.25 14.25 11.58 14.25 12V14.25M21.75 6.3V22.5C21.75 22.92 21.42 23.25 21 23.25H3C2.58 23.25 2.25 22.92 2.25 22.5V1.5C2.25 1.08 2.58 0.75 3 0.75H16.275C16.47 0.75 16.665 0.825 16.815 0.975L21.54 5.775C21.675 5.925 21.75 6.105 21.75 6.3ZM10.5 14.25H16.5C16.92 14.25 17.25 14.58 17.25 15V19.5C17.25 19.92 16.92 20.25 16.5 20.25H10.5C10.08 20.25 9.75 19.92 9.75 19.5V15C9.75 14.58 10.08 14.25 10.5 14.25Z"
-              stroke="black"
+              stroke="currentColor"
               strokeWidth="1.5"
+              className="text-muted-foreground"
             />
           </svg>
-          <p className="text-[#667085] text-sm ml-1 line-clamp-2 font-roboto">
+          <p className="text-muted-foreground text-sm ml-1 line-clamp-2 font-roboto">
             {title}
           </p>
         </div>

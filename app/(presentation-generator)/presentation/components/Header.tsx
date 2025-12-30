@@ -21,6 +21,7 @@ import { OverlayLoader } from "@/components/ui/overlay-loader";
 import { useDispatch, useSelector } from "react-redux";
 
 import Link from "next/link";
+import WakebLogo from "@/components/WakebLogo";
 
 import { RootState } from "@/store/store";
 import { toast } from "sonner";
@@ -265,11 +266,7 @@ const Header = ({
         <Announcement />
         <Wrapper className="flex items-center justify-between py-1">
           <Link href="/dashboard" className="min-w-[162px]">
-            <img
-              className="h-16 rounded-lg"
-              src="/wakeb-logo.jpg"
-              alt="Slidegen logo"
-            />
+            <WakebLogo width={150} height={40} />
           </Link>
 
           {/* Desktop Menu */}
