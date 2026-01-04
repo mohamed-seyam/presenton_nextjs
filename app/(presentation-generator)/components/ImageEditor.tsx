@@ -401,7 +401,7 @@ const ImageEditor = ({
                       className={`min-h-[100px] ${
                         isDarkMode
                           ? "bg-gray-700 text-gray-200 border-gray-600 placeholder:text-gray-400"
-                          : ""
+                          : "bg-white text-gray-900 border-gray-300 placeholder:text-gray-400"
                       }`}
                     />
                   </div>
